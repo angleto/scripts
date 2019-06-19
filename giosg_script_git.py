@@ -50,14 +50,7 @@ def first():
 		#print(m)
 		#print(a)
 		if m["id"] == a["results"][0]["resource_id"]:
-			#taking the status parameters from 5 first webhooks and sending them in the mail
-			d = a["results"][0]["status"]
-			c = a["results"][1]["status"]
-			f = a["results"][2]["status"]
-			e = a["results"][3]["status"]
-			k = a["results"][4]["status"]
-			message = d + '\n' + c + '\n' + f + '\n' + e + '\n' + k
-			sendEmail(message)
+			return None
 		elif m["id"] == a["results"][1]["resource_id"]:
 			return None	
 		elif m["id"] == a["results"][2]["resource_id"]:
@@ -66,8 +59,15 @@ def first():
 			return None
 		elif m["id"] == a["results"][4]["resource_id"]:
 			return None			
-		else:	
-			sendEmail(d)
+		else:
+			#taking the status parameters from 5 first webhooks and sending them in the mail
+			d = a["results"][0]["status"]
+			c = a["results"][1]["status"]
+			f = a["results"][2]["status"]
+			e = a["results"][3]["status"]
+			k = a["results"][4]["status"]
+			message = d + '\n' + c + '\n' + f + '\n' + e + '\n' + k
+			sendEmail(message)
 		
 def main(argv):
 	first()
