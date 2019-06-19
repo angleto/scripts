@@ -6,8 +6,6 @@ import requests
 import sys
 import json
 
-from datetime import datetime
-
 org_id = "organization_id"
 app_id = "app_id"
 auth = "webhook_auth_token"
