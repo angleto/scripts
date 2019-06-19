@@ -10,6 +10,11 @@ org_id = "organization_id"
 app_id = "app_id"
 auth = "webhook_auth_token"
 auth_user = "user_auth_token"
+email_account_username = "address@gmail.com"
+email_account_password = "password"
+email_from_field = "from@gmail.com"
+email_to_field = "to@gmail.com"
+
 WEBHOOK_ENDPOINT = "webhook_log_entry_api_url" % (org_id, app_id)
 user_id = "user_id"
 EMPTY_CHAT = "empty_chat_api_url" % (user_id)
@@ -26,15 +31,14 @@ def second():
 #function to send email if there is a problem in webhook creation
 def sendEmail(message):
 	server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-	server.login("adress@gmail.com", "password")
-	server.sendmail(
-		"from@gmail.com",
-		"to@gmail.com",
-		message)
+	server.login(email_account_username, email_account_password)
+	server.sendmail(email_from_field,
+			email_to_field,
+			message)
 	server.quit()	
 
 #create webhook and check webhook log entries
-def first():
+def main(argv):
 	#post to create a new webhook
 	r = requests.post(url = EMPTY_CHAT, headers = {"Authorization": auth})
 	if r.status_code != requests.codes.created:
@@ -66,9 +70,6 @@ def first():
 			k = a["results"][4]["status"]
 			message = d + '\n' + c + '\n' + f + '\n' + e + '\n' + k
 			sendEmail(message)
-		
-def main(argv):
-	first()
 
 if __name__ == "__main__":
 	main(sys.argv[1:])
